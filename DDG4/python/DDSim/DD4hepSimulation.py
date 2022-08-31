@@ -275,7 +275,7 @@ class DD4hepSimulation(object):
   def getDetectorLists(self, detectorDescription):
     ''' get lists of trackers and calorimeters that are defined in detectorDescription (the compact xml file)'''
     import DDG4
-    trackers, calos, unknown = [], [], []
+    trackers, photos, calos, unknown = [], [], [], []
     for i in detectorDescription.detectors():
       det = DDG4.DetElement(i.second.ptr())
       name = det.name()
@@ -285,13 +285,15 @@ class DD4hepSimulation(object):
         logger.info('getDetectorLists - found active detector %s type: %s', name, detType)
         if any(pat.lower() in detType.lower() for pat in self.action.trackerSDTypes):
           trackers.append(det.name())
+        elif any(pat.lower() in detType.lower() for pat in self.action.opticaltrackerSDTypes):
+          photos.append(det.name())
         elif any(pat.lower() in detType.lower() for pat in self.action.calorimeterSDTypes):
           calos.append(det.name())
         else:
           logger.warning('Unknown sensitive detector type: %s', detType)
           unknown.append(det.name())
 
-    return trackers, calos, unknown
+    return trackers, photos, calos, unknown
 
 # ==================================================================================
 
@@ -318,7 +320,7 @@ class DD4hepSimulation(object):
 
     # simple = DDG4.Geant4( kernel, tracker='Geant4TrackerAction',calo='Geant4CalorimeterAction')
     # simple = DDG4.Geant4( kernel, tracker='Geant4TrackerCombineAction',calo='Geant4ScintillatorCalorimeterAction')
-    simple = DDG4.Geant4(kernel, tracker=self.action.tracker, calo=self.action.calo)
+    simple = DDG4.Geant4(kernel, tracker=self.action.tracker, calo=self.action.calo, photo=self.action.opticaltracker)
 
     simple.printDetectors()
 
@@ -476,9 +478,10 @@ class DD4hepSimulation(object):
     # =================================================================================
     # get lists of trackers and calorimeters in detectorDescription
 
-    trk, cal, unk = self.getDetectorLists(detectorDescription)
+    trk, pho, cal, unk = self.getDetectorLists(detectorDescription)
 
     for detectors, function, defFilter, abort in [(trk, simple.setupTracker, self.filter.tracker, False),
+                                                  (pho, simple.setupOpticalTracker, self.filter.photo, False),
                                                   (cal, simple.setupCalorimeter, self.filter.calo, False),
                                                   (unk, simple.setupDetector, None, True),
                                                   ]:

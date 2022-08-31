@@ -20,6 +20,7 @@ class Filter(ConfigHelper):
 
   Set the default filter for tracker or caliromter
   >>> SIM.filter.tracker = "edep1kev"
+  >>> SIM.filter.photo = "opticalphotons"
   >>> SIM.filter.calo = ""
 
   Assign a filter to a sensitive detector via pattern matching
@@ -40,6 +41,7 @@ class Filter(ConfigHelper):
     super(Filter, self).__init__()
     self._mapDetFilter = {}
     self._tracker = "edep1kev"
+    self._photo = "opticalphotons"
     self._calo = "edep0"
     self._filters = {}
     self._createDefaultFilters()
@@ -52,6 +54,15 @@ class Filter(ConfigHelper):
   @tracker.setter
   def tracker(self, val):
     self._tracker = val
+
+  @property
+  def photo(self):
+    """ default filter for tracking sensitive detectors; this is applied if no other filter is used for a opticaltracker"""
+    return self._photo
+
+  @photo.setter
+  def photo(self, val):
+    self._photo = val
 
   @property
   def calo(self):
@@ -112,6 +123,8 @@ class Filter(ConfigHelper):
 
     self.filters["edep0"] = dict(name="EnergyDepositMinimumCut/Cut0",
                                  parameter={"Cut": 0.0})
+    self.filters["opticalphotons"] = dict(name='ParticleSelectFilter/OpticalPhotonSelector',
+                                          parameter={"particle": "opticalphoton"})
 
   def __makeMapDetList(self):
     """ create the values of the mapDetFilters a list of filters """
@@ -135,7 +148,7 @@ class Filter(ConfigHelper):
     listOfFilters = []
     for val in self.mapDetFilter.values():
       listOfFilters += ConfigHelper.makeList(val)
-    requestedFilter = set(chain(ConfigHelper.makeList(self.tracker), ConfigHelper.makeList(self.calo), listOfFilters))
+    requestedFilter = set(chain(ConfigHelper.makeList(self.tracker), ConfigHelper.makeList(self.photo), ConfigHelper.makeList(self.calo), listOfFilters))
     logger.info("ReqFilt %s", requestedFilter)
     if requestedFilter - setOfFilters:
       raise RuntimeError(" Filter(s) '%s' are not registered!" % str(requestedFilter - setOfFilters))

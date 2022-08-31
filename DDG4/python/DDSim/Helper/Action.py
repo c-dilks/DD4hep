@@ -14,6 +14,7 @@ class Action(ConfigHelper):
 
   >>> SIM = DD4hepSimulation()
   >>> SIM.action.tracker=('Geant4TrackerWeightedAction', {'HitPositionCombination': 2, 'CollectSingleDeposits': False})
+  >>> SIM.action.opticaltracker = "Geant4OpticalTrackerAction"
   >>> SIM.action.calo = "Geant4CalorimeterAction"
 
   The default sensitive actions for calorimeters and trackers are applied based on the sensitive type.
@@ -21,6 +22,7 @@ class Action(ConfigHelper):
 
   >>> SIM = DD4hepSimulation()
   >>> SIM.action.trackerSDTypes = ['tracker', 'myTrackerSensType']
+  >>> SIM.action.opticaltrackerSDTypes = ['opticaltracker', 'myOpticalTrackerSensType']
   >>> SIM.calor.calorimeterSDTypes = ['calorimeter', 'myCaloSensType']
 
   For specific subdetectors specific sensitive detectors can be set based on patterns in the name of the subdetector.
@@ -38,9 +40,11 @@ class Action(ConfigHelper):
   def __init__(self):
     super(Action, self).__init__()
     self._tracker = ('Geant4TrackerWeightedAction', {'HitPositionCombination': 2, 'CollectSingleDeposits': False})
+    self._opticaltracker = 'Geant4OpticalTrackerAction'
     self._calo = 'Geant4ScintillatorCalorimeterAction'
     self._mapActions = dict()
     self._trackerSDTypes = ['tracker']
+    self._opticaltrackerSDTypes = ['opticaltracker']
     self._calorimeterSDTypes = ['calorimeter']
 
   @property
@@ -60,6 +64,15 @@ class Action(ConfigHelper):
   @calo.setter
   def calo(self, val):
     self._calo = val
+
+  @property
+  def opticaltracker(self):
+    """ set the default opticaltracker action """
+    return self._opticaltracker
+
+  @opticaltracker.setter
+  def opticaltracker(self, val):
+    self._opticaltracker = val
 
   @property
   def mapActions(self):
@@ -101,6 +114,15 @@ class Action(ConfigHelper):
   @trackerSDTypes.setter
   def trackerSDTypes(self, val):
     self._trackerSDTypes = ConfigHelper.makeList(val)
+
+  @property
+  def opticaltrackerSDTypes(self):
+    """List of patterns matching sensitive detectors of type opticaltracker."""
+    return self._opticaltrackerSDTypes
+
+  @opticaltrackerSDTypes.setter
+  def opticaltrackerSDTypes(self, val):
+    self._opticaltrackerSDTypes = ConfigHelper.makeList(val)
 
   @property
   def calorimeterSDTypes(self):

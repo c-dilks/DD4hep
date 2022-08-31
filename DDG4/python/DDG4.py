@@ -404,7 +404,8 @@ class Geant4:
 
   def __init__(self, kernel=None,
                calo='Geant4CalorimeterAction',
-               tracker='Geant4SimpleTrackerAction'):
+               tracker='Geant4SimpleTrackerAction',
+               photo='Geant4OpticalTrackerAction'):
     kernel.UI = "UI"
     kernel.printProperties()
     self._kernel = kernel
@@ -414,6 +415,7 @@ class Geant4:
     self.sensitive_types = {}
     self.sensitive_types['tracker'] = tracker
     self.sensitive_types['calorimeter'] = calo
+    self.sensitive_types['opticaltracker'] = photo
     self.sensitive_types['escape_counter'] = 'Geant4EscapeCounter'
 
   def kernel(self):
@@ -706,6 +708,15 @@ class Geant4:
     # sd.setType('tracker')
     if type is None:
       type = self.sensitive_types['tracker']
+    return self.setupDetector(name, type, collections)
+
+  def setupOpticalTracker(self, name, type=None, collections=None):
+    """
+    Setup subdetector of type 'opticaltracker' and assign the proper sensitive action
+    """
+    self.description.sensitiveDetector(str(name))
+    if type is None:
+      type = self.sensitive_types['opticaltracker']
     return self.setupDetector(name, type, collections)
 
   def _private_setupField(self, field, stepper, equation, prt):
