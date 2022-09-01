@@ -1,0 +1,12 @@
+  <define>
+    <constant name="world_side" value="30*m"/>
+    <constant name="world_x" value="world_side"/>
+    <constant name="world_y" value="world_side"/>
+    <constant name="world_z" value="100*m"/>
+
+    <constant name="Pi" value="3.14159265359"/>
+    <constant name="mil" value="0.0254*mm"/>
+    <constant name="inch" value="2.54*cm"/>
+
+    <constant name="BackwardRICH_ID"    value="131"/>
+  </define>
