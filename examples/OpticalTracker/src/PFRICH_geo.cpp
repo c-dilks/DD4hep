@@ -101,7 +101,7 @@ static Ref_t createDetector(Detector& desc, xml::Handle_t handle, SensitiveDetec
   // auto originBack = Position(0., 0., -vesselLength / 2.0);
 
   // sensitive detector type
-  sens.setType("tracker");
+  sens.setType("opticaltracker");
 
   // BUILD RADIATOR //////////////////////////////////////
 
