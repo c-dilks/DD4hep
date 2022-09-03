@@ -30,18 +30,18 @@
 
 <define>
   <include ref="definitions.xml" />
-  <constant name="PFRICH_Length"             value="60.0*cm"/>                     <!-- vessel z-length -->
-  <constant name="PFRICH_zmin"               value="-140*cm"/>                     <!-- vessel front -->
+  <constant name="PFRICH_Length"             value="58.0*cm"/>                     <!-- vessel z-length -->
+  <constant name="PFRICH_zmin"               value="-150*cm"/>                     <!-- vessel front -->
   <constant name="PFRICH_zmax"               value="PFRICH_zmin - PFRICH_Length"/> <!-- vessel back -->
   <constant name="PFRICH_rmin0"              value="5*cm"/>                        <!-- bore radius at vessel frontplane -->
   <constant name="PFRICH_rmin1"              value="7*cm"/>                        <!-- bore radius at vessel backplane -->
-  <constant name="PFRICH_rmax"               value="90*cm"/>                       <!-- vessel backplane radius -->
+  <constant name="PFRICH_rmax"               value="93*cm"/>                       <!-- vessel backplane radius -->
   <constant name="PFRICH_wall_thickness"     value="0.5*cm"/>                      <!-- thickness of radial walls -->
   <constant name="PFRICH_window_thickness"   value="0.1*cm"/>                      <!-- thickness of entrance and exit walls -->
   <constant name="PFRICH_aerogel_thickness"  value="3.0*cm"/>                      <!-- aerogel thickness -->
   <constant name="PFRICH_sensor_active_size" value="24.0*mm"/>                     <!-- sensor side length (effective area) -->
   <constant name="PFRICH_sensor_full_size"   value="25.8*mm"/>                     <!-- sensor side length (full size, with enclosure) -->
-  <constant name="PFRICH_sensor_thickness"   value="1.5*mm"/>                      <!-- sensor thickness -->
+  <constant name="PFRICH_sensor_thickness"   value="0.5*mm"/>                      <!-- sensor thickness -->
   <constant name="PFRICH_sensor_dist"        value="40*cm"/>                       <!-- distance between aerogel exit plane and sensor entrance plane -->
   <constant name="PFRICH_num_px"             value="8"/>                           <!-- number of pixels along one side of the sensor -->
 </define>
