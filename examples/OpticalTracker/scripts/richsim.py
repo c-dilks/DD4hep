@@ -49,6 +49,8 @@ if __name__ == "__main__":
   )
   SIM.filter.mapDetFilter['PFRICH'] = 'opticalphotons'
 
+  # Use the optical tracker for the PFRICH
+  SIM.action.mapActions['PFRICH'] = 'Geant4OpticalTrackerAction'
 
   # Parse remaining options (command line and steering file override above)
   SIM.parseOptions()

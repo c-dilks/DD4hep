@@ -4,7 +4,7 @@ export DD4hepExamplesINSTALL=`pwd`
 source install/bin/thisOpticalTracker.sh;
 prefix=install/examples/OpticalTracker
 
-scripts/npsim.py \
+scripts/richsim.py \
   --numberOfEvents   10                         \
   --runType          run                        \
   --compactFile      $prefix/compact/pfrich.xml \
